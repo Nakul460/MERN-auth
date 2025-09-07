@@ -5,6 +5,7 @@ import cookieParser  from 'cookie-parser';
 import connectdb from './config/mongodb.js';
 import userModel from './models/user_models.js';
 import authRouter from './routes/authRoutes.js'
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 4000
@@ -19,6 +20,7 @@ app.get('/',(req,res) =>{
     res.send("API Working");
 })
 app.use('/api/auth',authRouter);
+app.use('/api/user',userRouter);
 
 app.listen(4000,()=>{
     console.log(`server stared on PORT:${port}`);
