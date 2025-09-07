@@ -1,7 +1,9 @@
 import React from 'react'
 import { assets } from '../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+    const navigate = useNavigate()
   return (
     <div className='flex flex-col items-center text-center justify-center h-screen ab'>
       
@@ -15,7 +17,7 @@ const Header = () => {
       <p className='mb-6 px- sm:w-120 sm:px-0'>Let's start with a quick product tour and we will have
         you up and running in no time!</p>
 
-      <button className='border border-gray-500 px-4 py-2 rounded-full
+      <button onClick={()=>navigate('/login')} className='border border-gray-500 px-4 py-2 rounded-full
       hover:bg-gray-100 active:bg-gray-100 transition-all'>Get started</button>
 
     </div>  
