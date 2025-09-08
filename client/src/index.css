@@ -3,4 +3,18 @@
 
 *{
   font-family: "Outfit", sans-serif;
+  overflow: clip;
 }
+/* For Chrome, Safari, Edge */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #333A5C inset; /* set background */
+  -webkit-text-fill-color: #a5b4fc; /* text color */
+  transition: background-color 5000s ease-in-out; /* hack to prevent flash */
+}
+
+/* For Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px white inset;
+  -moz-text-fill-color: #000;
+}
+
