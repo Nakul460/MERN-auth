@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const [state,setState] = useState('Sign Up')
+  const [state,setState] = useState('Login')
   const navigate = useNavigate()
 
   const [name,setName] = useState('')
@@ -21,7 +21,7 @@ const Login = () => {
       text-indigo-300 text-sm'>
         
       <h2 className='text-3xl font-semibold text-white text-center mb-3'>
-        {state === 'Sign Up' ? 'Create account': 'login'}
+        {state === 'Sign Up' ? 'Create account': 'Login'}
         </h2>
 
       <p className='text-center text-sm mb-6' >
