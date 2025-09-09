@@ -9,7 +9,7 @@ const Login = () => {
   const [state,setState] = useState('Login')
   const navigate = useNavigate()
 
-  const { backendUrl,setIsLoggedin } = useContext(AppContent)
+  const { backendUrl,setIsLoggedin,getUserData } = useContext(AppContent)
 
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
@@ -25,6 +25,7 @@ const Login = () => {
         )
         if(data.success){
           setIsLoggedin(true)
+          getUserData()
           navigate('/')
           toast.success('Registerd Successfully')
         }
@@ -39,6 +40,7 @@ const Login = () => {
           })
           if(data.success){
             setIsLoggedin(true)
+            getUserData()
             navigate('/')
             toast.success('Login Successful')
 
