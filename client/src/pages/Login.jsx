@@ -121,7 +121,7 @@ const Login = () => {
       </div>
 
 
-        <p onClick={()=>navigate('/reset-password')} className='mb-4 mx-2 text-md text-indigo-500 cursor-pointer' >Forgot password?</p>
+        <p onClick={()=>navigate('/Reset')} className='mb-4 mx-2 text-md text-indigo-500 cursor-pointer' >Forgot password?</p>
 
         <button type='submit' className='w-full bg-amber-50 py-2.5 h-12 rounded-full 
         bg-gradient-to-r from-indigo-500 to-indigo-900 text-white text-xl 

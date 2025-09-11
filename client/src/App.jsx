@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import { ToastContainer } from 'react-toastify';
 import Verify from './pages/Verify';
+import Reset from './pages/Reset';
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/Login' element={<Login/>}/>
         <Route path='/Verify' element={<Verify/>}/>
+        <Route path='/Reset' element={<Reset/>}/>
       </Routes>
     </div>
   )

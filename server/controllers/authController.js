@@ -239,12 +239,18 @@ export const sendResetOtp = async (req,res) =>{
     }
 }
 
+
+
+
+
 //Reset user password
 export const resetPassword = async (req,res) =>{
     const {email,otp,newPassword} = req.body
 
     if(!email || !otp || !newPassword){
         return res.json({success:false,message:'Email,OTP and new password are required'});
+
+        
     }
 
     try {

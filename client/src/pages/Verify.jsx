@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { data, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -54,6 +54,10 @@ const Verify = ()=> {
             toast.error(error.message)
         }
     }
+    
+    useEffect(()=>{
+        isLoggedin && userData && userData.isAccountVerified && navigate('/')
+    },[isLoggedin,userData])
     return(
         <div className="flex justify-center items-center  min-h-screen bg-gradient-to-b from-blue-200 to-purple-400">
 
