@@ -121,40 +121,38 @@ export const logout = async (req,res) =>{
 }
 
 // send verification to user's email
-export const sendVerifyOtp = async (req,res) => {
-    try {
+export const sendVerifyOtp = async (req, res) => {
+  try {
+    const userId = req.userId; 
+    
+    const user = await userModel.findById(userId);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-        const {userId} = req.body;
-        
-        const user = await userModel.findById(userId);
-
-        if(user.isAccountVerified){
-            return res.json({success:false,message:'Account already verified'});
-        }
-
-        const otp = String(Math.floor(100000 + Math.random() * 900000));
-
-        user.verifyOtp = otp;
-        user.verifyOtpExpireAt = Date.now() + 5 * 60 * 1000;
-
-        await user.save();
-
-        const mailOptions = {
-            from: `"MERN App" <${process.env.SENDER}>`,
-            to: user.email,
-            subject : 'OTP verification',
-            html:`<p>Here is your otp</p>
-                  <h1>${otp}</h1>`
-        }
-
-        await transporter.sendMail(mailOptions);
-
-        res.json({success:true,message:'Verification OTP sent!'});
-
-    } catch (error) {
-      res.json({success:false,message:error.message});  
+    if (user.isAccountVerified) {
+      return res.json({ success: false, message: "Account already verified" });
     }
-}
+
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    user.verifyOtp = otp;
+    user.verifyOtpExpireAt = Date.now() + 5 * 60 * 1000; 
+    await user.save();
+
+    const mailOptions = {
+      from: `"MERN App" <${process.env.SENDER}>`,
+      to: user.email,
+      subject: "OTP verification",
+      html: `<p>Here is your OTP:</p><h1>${otp}</h1>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({ success: true, message: "Verification OTP sent!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 
 export const verifyEmail = async (req,res) => {
     const {userId,otp} = req.body;
