@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 const Login = () => {
   const [state,setState] = useState('Login')
   const navigate = useNavigate()
+  const [hideState,setHideState] = useState(true)
 
   const { backendUrl,setIsLoggedin,getUserData } = useContext(AppContent)
 
@@ -94,15 +95,31 @@ const Login = () => {
           className=' outline-0 h-8 text-lg'  />
         </div>
 
-                <div className='mb-4 mt-8 flex items-center gap-3 w-full px-5 py-2.5
-        rounded-full bg-[#333A5C]'>
-          
-          <img src={assets.lock_icon} alt="" />
+      <div className="mb-4 mt-8 flex items-center gap-3 w-full px-5 py-2.5
+        rounded-full bg-[#333A5C] overflow-hidden">
+        
+       
+        <img src={assets.lock_icon} alt="" className="w-3 flex-shrink-0" />
 
-          <input onChange={e => setPassword(e.target.value)} value={password}
-          type="password" placeholder='Password' required 
-          className=' outline-0 h-8 text-lg'  />
-        </div>
+    
+        <input
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+          type={hideState ? "password" : "text"}
+          placeholder="Password"
+          required
+          className="flex-1 outline-0 h-8 text-lg bg-transparent  min-w-0"
+        />
+
+     
+        <img
+          onClick={()=>setHideState(!hideState)}
+          className="w-5 sm:w-6 flex-shrink-0 cursor-pointer"
+          src={hideState ? assets.hidden : assets.view}
+          alt=""
+        />
+      </div>
+
 
         <p onClick={()=>navigate('/reset-password')} className='mb-4 mx-2 text-md text-indigo-500 cursor-pointer' >Forgot password?</p>
 

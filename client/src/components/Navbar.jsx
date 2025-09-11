@@ -5,7 +5,7 @@ import { AppContent } from '../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 const Navbar = () => {
-
+    const [open,setOpen] = useState(false)
     const navigate = useNavigate()
     const {userData,backendUrl,setUserData,setIsLoggedin} = useContext(AppContent)
     const logout = async ()=>{
@@ -27,7 +27,7 @@ const Navbar = () => {
       
       {
       userData ? 
-      <div className='w-8 h-8 flex items-center justify-center rounded-full bg-black text-white relative group '>
+      <div onMouseEnter={()=>setOpen(true)} onMouseLeave={()=>setOpen(false)} className='w-8 h-8 flex items-center justify-center rounded-full bg-black cursor-pointer text-white relative group '>
         
         <div className='absolute top-0 right-0 mt-8  w-full  bg-transparent h-2 '>
         </div>
@@ -35,15 +35,18 @@ const Navbar = () => {
         
         
 
-        <div className='absolute hidden mt-10 group-hover:block top-0 right-0 z-10 text-black rounded  overflow-visible shadow-2xl'>
+        {open ? <div className='absolute  mt-10 group-hover:block top-0 right-0 z-10 text-black rounded  overflow-visible shadow-2xl x'>
           <div className='absolute -top-2 right-1 border-l-10 border-l-transparent border-r-10 border-r-transparent border-b-10 border-b-gray-100 shadow-5xl '>
-        </div>
-          <ul className='list-none m-0 p-2 bg-gray-100 text-sm'>
-            {!userData.isAccountVerified && <li className='py-1 px-2 hover:bg-gray-200 cursor-pointer '>Verify email</li>
+        </div>{
+          open ? <ul  className=' list-none m-0 p-2 bg-gray-100 text-sm'>
+            {!userData.isAccountVerified && <li onClick={()=>navigate('/Verify-email')}  className='py-1 px-2 active:bg-gray-200 hover:bg-gray-200 cursor-pointer ' >Verify email</li>
 }
-            <li onClick={logout} className='pr-10 py-1 px-2 hover:bg-gray-200 cursor-pointer'>Logout</li>
-          </ul>
-          </div>
+            <li onClick={logout} className='pr-10 py-1 px-2 active:bg-gray-200 hover:bg-gray-200 cursor-pointer'>Logout</li>
+          </ul> :
+          <div className='hidden'></div>
+        }
+          
+          </div>:<div className='hidden'></div>}
           
         
       </div>:

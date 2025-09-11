@@ -7,6 +7,7 @@
 }
 /* For Chrome, Safari, Edge */
 input:-webkit-autofill {
+  width: 100%;
   -webkit-box-shadow: 0 0 0px 1000px #333A5C inset; /* set background */
   -webkit-text-fill-color: #a5b4fc; /* text color */
   transition: background-color 5000s ease-in-out; /* hack to prevent flash */
