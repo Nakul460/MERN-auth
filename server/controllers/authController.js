@@ -241,6 +241,35 @@ export const sendResetOtp = async (req,res) =>{
 
 
 
+// Verify password reset OTP
+export const verifyResetOtp = async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.json({ success: false, message: "Email and OTP are required" });
+  }
+
+  try {
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    if (user.resetOtp === '' || user.resetOtp !== otp) {
+      return res.json({ success: false, message: "Invalid OTP" });
+    }
+
+    if (user.resetOtpExpireAt < Date.now()) {
+      return res.json({ success: false, message: "OTP expired" });
+    }
+
+    return res.json({ success: true, message: "OTP verified successfully" });
+
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
 
 
 //Reset user password
@@ -248,31 +277,28 @@ export const resetPassword = async (req,res) =>{
     const {email,otp,newPassword} = req.body
 
     if(!email || !otp || !newPassword){
-        return res.json({success:false,message:'Email,OTP and new password are required'});
-
-        
+        return res.json({success:false,message:'Email, OTP and new password are required'});
     }
 
     try {
-        
         const user = await userModel.findOne({email});
 
-        if(!email){
-            
+        if(!user){
             return res.json({success:false,message:'User not found'});
-
         }
 
         if(user.resetOtp === '' || user.resetOtp !== otp){
-        
             return res.json({success:false,message:'Invalid OTP'});
-
         }
 
-        if(user.resetOtpExpireAt<Date.now()){
-        
+        if(user.resetOtpExpireAt < Date.now()){
             return res.json({success:false,message:'OTP expired'});
+        }
 
+        // ✅ Password validation
+        const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$/;
+        if(!passRegex.test(newPassword)){
+            return res.json({success:false,message:"Invalid password. Must contain 1 uppercase, 1 lowercase, 1 number and be at least 6 characters"});
         }
 
         const hashedPassword = await bcrypt.hash(newPassword,10);
@@ -283,11 +309,9 @@ export const resetPassword = async (req,res) =>{
 
         await user.save();
 
-        return res.json({success:true,message:"Password reset is successful"});
+        return res.json({success:true,message:"Password reset successful"});
 
     } catch (error) {
-        
         return res.json({success:false,message:error.message});
-
     }
 }
