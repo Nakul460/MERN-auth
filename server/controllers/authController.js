@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import userModel from '../models/user_models.js';
 import transporter from '../config/nodemailer.js';
 import jwt from 'jsonwebtoken';
+import { EMAIL_VERIFY_TEMPLATE,PASSWORD_RESET_TEMPLATE } from '../config/emailTemplates.js';
+
 
 
 
@@ -141,7 +143,7 @@ export const sendVerifyOtp = async (req, res) => {
       from: `"MERN App" <${process.env.SENDER}>`,
       to: user.email,
       subject: "OTP verification",
-      html: `<p>Here is your OTP:</p><h1>${otp}</h1>`,
+      html: EMAIL_VERIFY_TEMPLATE.replace('{{otp}}',otp).replace('{{email}}',user.email)
     };
 
     await transporter.sendMail(mailOptions);
@@ -225,8 +227,7 @@ export const sendResetOtp = async (req,res) =>{
             from: `"MERN App" <${process.env.SENDER}>`,
             to: user.email,
             subject : 'Password reset OTP ',
-            html:`<p>Here is your otp</p>
-                  <h1>${otp}</h1>`
+            html:PASSWORD_RESET_TEMPLATE.replace("{{otp}}",otp).replace("{{email}}",user.email)
         }
 
         await transporter.sendMail(mailOptions);
