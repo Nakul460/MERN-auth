@@ -12,6 +12,7 @@ export const AppContextProvider = (props) =>{
     
     const [isLoggedin,setIsLoggedin] = useState(false)
     const [userData,setUserData] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     const getAuthState = async () =>{
         try {
@@ -46,7 +47,8 @@ export const AppContextProvider = (props) =>{
         backendUrl,
         isLoggedin,setIsLoggedin,
         userData,setUserData,
-        getUserData
+        getUserData,
+        loading,setLoading
 
     }
     return(

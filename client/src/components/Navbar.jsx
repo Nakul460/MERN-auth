@@ -19,8 +19,10 @@ const Navbar = () => {
         toast.error(data.error)
       }
     }
-    
+    const {loading,setLoading} = useContext(AppContent)
+
     const sendVerificationOtp = async () => {
+      setLoading(true)
       try {
         axios.defaults.withCredentials = true;
         const {data} = await axios.post(backendUrl + '/api/auth/send-verify-otp')
@@ -34,6 +36,9 @@ const Navbar = () => {
         }
       } catch (error) {
         toast.error(error.message)
+      }
+      finally{
+        setLoading(false)
       }
     }
 
