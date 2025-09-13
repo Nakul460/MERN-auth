@@ -8,7 +8,7 @@ const Header = () => {
     const {userData} = useContext(AppContent)
   return (
     <div className='flex flex-col items-center text-center justify-center h-screen ab'>
-        <h1>Hi</h1>
+   
       
       <img src={assets.header_img} alt="" className='w-36 h-36 rounded-full mb-6' />
        
